@@ -1,5 +1,5 @@
 {
-  "name": "@nuage/device",
+  "name": "vanilla-device",
   "version": "0.1.0",
   "main": "umd/index.js",
   "types": "umd/index.d.ts",
@@ -15,10 +15,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ymzuiku/nuage-device.git"
+    "url": "git+https://github.com/ymzuiku/vanilla-device.git"
   },
   "bugs": {
-    "url": "git+https://github.com/ymzuiku/nuage-device.git"
+    "url": "git+https://github.com/ymzuiku/vanilla-device.git"
   },
-  "homepage": "git+https://github.com/ymzuiku/nuage-device.git"
+  "homepage": "git+https://github.com/ymzuiku/vanilla-device.git"
 }

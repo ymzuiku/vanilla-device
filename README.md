@@ -62,3 +62,29 @@ import vanillaDevice from 'vanilla-device';
 
 vanillaDevice.setKeyboardAutoScrollBack();
 ```
+
+### 5. replace css @media:
+
+```js
+import vanillaDevice from 'vanilla-device';
+
+const css = `
+  @media-pc {
+    .hello {
+      background: #f00;
+    }
+  }
+`;
+
+const nextCss = vanillaDevice.replaceCSSMedia(css);
+
+/* out nextCss 
+`
+  @media (min-width: ${isPc() ? '0px' : '9999px'}) {
+    .hello {
+      background: #f00;
+    }
+  }
+`;
+*/
+```

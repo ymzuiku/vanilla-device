@@ -37,16 +37,16 @@ export const isNativeIOS = () => window.location.href.indexOf('_os_ios_') >= 0;
 export const isNativeAndroid = () => window.location.href.indexOf('_os_android_') >= 0;
 export const isNative = () => isNativeIOS() || isNativeAndroid() || (window as any).cordova || false;
 
-export const topSafe = () => (isNative() ? (isNeedIPhoneSafe() ? 43 : 20) : 0);
+export const safeTop = () => (isNative() ? (isNeedIPhoneSafe() ? 43 : 20) : 0);
 
-export const bottomSafe = () => (isNative() || isWechat() ? (isNeedIPhoneSafe() ? 25 : 0) : 0);
+export const safeBottom = () => (isNative() || isWechat() ? (isNeedIPhoneSafe() ? 25 : 0) : 0);
 
 const id = '__device-style-ele__';
 
 // 根据设备设置高度
 function setCSSValue() {
   const deviceStyle = `
-    :root {--safe-top:${topSafe()}px; --safe-bottom:${bottomSafe()}px; --hair:${hair()}px; --line:${line()}px;}
+    :root {--safe-top:${safeTop()}px; --safe-bottom:${safeBottom()}px; --hair:${hair()}px; --line:${line()}px;}
     body {height:${window.innerHeight}px;}
   `;
 
@@ -122,7 +122,7 @@ export const setKeyboardAutoScrollBack = () => {
       keyboardFocusInput.blur();
     }
   };
-  document.body.addEventListener('focusin', e => {
+  document.body.addEventListener('focusin', (e: any) => {
     // 软键盘弹起事件
     keyboardFocusInput = e.target;
     bodyScrollTop = document.body.scrollTop;

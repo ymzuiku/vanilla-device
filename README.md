@@ -1,4 +1,4 @@
-# @nuage/device
+# vanilla-device
 
 - Get mobile device detail
   The introduction of mobile-touch, if the device is a mobile device, can make the whole page scroll closer to native and support Typescript
@@ -8,13 +8,13 @@
 unpkg:
 
 ```html
-<script src="https://unpkg.com/@nuage/device@0.1.0/umd/index.js"></script>
+<script src="https://unpkg.com/vanilla-device@0.2.4/umd/index.js"></script>
 ```
 
 npm:
 
 ```sh
-$ npm install --save @nuage/device
+$ npm install --save vanilla-device
 ```
 
 ## Feature

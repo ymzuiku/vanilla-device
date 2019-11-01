@@ -1,3 +1,5 @@
-import * as vanillaDevice from './device';
+export * from './device';
 
-export default vanillaDevice;
+// const vanillaDevice = { ...device };
+
+// export default vanillaDevice;

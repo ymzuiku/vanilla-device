@@ -1,3 +1,5 @@
+export declare const iw: () => number;
+export declare const ih: () => number;
 export declare const isSmall: () => boolean;
 export declare const isMiddle: () => boolean;
 export declare const isLarge: () => boolean;
@@ -23,4 +25,3 @@ export declare const safeBottom: () => 0 | 25;
 export declare const setCanNotScalePage: () => void;
 export declare const setKeyboardAutoScrollBack: () => void;
 export declare const setFocusTouchScroll: (view: any) => void;
-export declare const replaceCSSMedia: (css: string) => string;

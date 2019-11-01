@@ -1,7 +1,7 @@
 const ua = navigator.userAgent;
 const dp = window.devicePixelRatio || 1;
-const iw = () => window.innerWidth;
-const ih = () => window.innerHeight;
+export const iw = () => window.innerWidth;
+export const ih = () => window.innerHeight;
 
 export const isSmall = () => (dp > 1 ? iw() <= 320 : iw() <= 640);
 export const isMiddle = () => (dp > 1 ? iw() <= 375 : iw() <= 750);

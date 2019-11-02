@@ -141,7 +141,7 @@ export const setKeyboardAutoScrollBack = () => {
 };
 
 export const setFocusTouchScroll = (view?: any) => {
-  if (isPc() && !(window as any).__setBodyCanNotTouchScroll) {
+  if (!(window as any).__setBodyCanNotTouchScroll) {
     // 阻止默认的处理方式(阻止下拉滑动的效果)
     document.addEventListener(
       'touchmove',

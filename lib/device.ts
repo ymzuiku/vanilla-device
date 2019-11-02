@@ -140,7 +140,7 @@ export const setKeyboardAutoScrollBack = () => {
   });
 };
 
-export const setFocusTouchScroll = (view: any) => {
+export const setFocusTouchScroll = (view?: any) => {
   if (isPc() && !(window as any).__setBodyCanNotTouchScroll) {
     // 阻止默认的处理方式(阻止下拉滑动的效果)
     document.addEventListener(
@@ -150,7 +150,12 @@ export const setFocusTouchScroll = (view: any) => {
       },
       { passive: false },
     );
-    (window as any).__setBodyCanNotTouchScroll = true;
+    return;
+  }
+  (window as any).__setBodyCanNotTouchScroll = true;
+
+  if (!view) {
+    return;
   }
 
   // 确保滚动区域在最顶部和最底部时，touch不会让body滚动

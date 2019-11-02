@@ -118,23 +118,32 @@ export const setKeyboardAutoScrollBack = () => {
   (window as any).__setKeyboardAutoScrollBack = true;
   // 处理ios移动端键盘自动收起，并且回到页面滚动位置
   let bodyScrollTop = 0;
+  let windowScrollTop = 0;
   let keyboardFocusInput: any;
-  const bindBlurKeyboard = () => {
+  let keyboardTimer = null as any;
+  const bindBlurKeyboard = (e: any) => {
     if (keyboardFocusInput && keyboardFocusInput.blur) {
       keyboardFocusInput.blur();
     }
   };
   document.body.addEventListener('focusin', (e: any) => {
+    if (keyboardTimer) {
+      clearTimeout(keyboardTimer);
+      keyboardTimer = null;
+    }
     // 软键盘弹起事件
     keyboardFocusInput = e.target;
     bodyScrollTop = document.body.scrollTop;
-    setTimeout(() => {
+    windowScrollTop = window.scrollY;
+
+    keyboardTimer = setTimeout(() => {
       document.body.addEventListener('touchend', bindBlurKeyboard);
-    }, 50);
+    }, 60);
   });
   document.body.addEventListener('focusout', () => {
     // 软键盘关闭事件
     document.body.scrollTop = bodyScrollTop;
+    window.scrollTo(0, windowScrollTop);
     keyboardFocusInput = false;
     document.body.removeEventListener('touchend', bindBlurKeyboard);
   });

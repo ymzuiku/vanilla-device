@@ -46,8 +46,10 @@ const id = '__device-style-ele__';
 // 根据设备设置高度
 function setCSSValue() {
   const deviceStyle = `
-    :root {--safe-top:${safeTop()}px; --safe-bottom:${safeBottom()}px; --hair:${hair()}px; --line:${line()}px;}
-    body {height:${window.innerHeight}px;}
+    :root {
+      --safe-top:${safeTop()}px; --safe-bottom:${safeBottom()}px; --hair:${hair()}px;--line:${line()}px; --iw:${iw()}px; --ih:${ih()}px;
+    }
+    body {height:${ih()}px;}
   `;
 
   const lastStyle = document.getElementById(id);

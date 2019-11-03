@@ -49,7 +49,6 @@ function setCSSValue() {
     :root {
       --safe-top:${safeTop()}px; --safe-bottom:${safeBottom()}px; --hair:${hair()}px;--line:${line()}px; --iw:${iw()}px; --ih:${ih()}px;
     }
-    body {height:${ih()}px;}
   `;
 
   const lastStyle = document.getElementById(id);
@@ -195,24 +194,4 @@ export const setFocusTouchScroll = (view?: any) => {
       }
     });
   }
-};
-
-const media = {
-  '@media-sm': `@media (min-width: 640px)`,
-  '@media-md': '@media (min-width: 768px)',
-  '@media-lg': '@media (min-width: 1024px)',
-  '@media-xl': '@media (min-width: 1280px)',
-  '@media-pc': `@media (min-width: ${isPc() ? '0px' : '9999px'})`,
-  '@media-ios': `@media (min-width: ${isIos() ? '0px' : '9999px'})`,
-  '@media-android': `@media (min-width: ${isAndroid() ? '0px' : '9999px'})`,
-  '@media-wechat': `@media (min-width: ${isWechat() ? '0px' : '9999px'})`,
-};
-
-export const replaceCSSMedia = (css: string) => {
-  if (/@media-/.test(css)) {
-    Object.keys(media).forEach(k => {
-      css = css.replace(k, (media as any)[k]);
-    });
-  }
-  return css;
 };

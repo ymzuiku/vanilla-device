@@ -25,4 +25,3 @@ export declare const safeBottom: () => 0 | 25;
 export declare const setCanNotScalePage: () => void;
 export declare const setKeyboardAutoScrollBack: () => void;
 export declare const setFocusTouchScroll: (view?: any) => void;
-export declare const replaceCSSMedia: (css: string) => string;

@@ -12,20 +12,30 @@ export const isAndroid = () => /(?:Android)/.test(ua);
 // const isAndroid = true;
 export const isFireFox = () => /(?:Firefox)/.test(ua);
 export const isChrome = () => /(?:Chrome|CriOS)/.test(ua);
-export const isTablet = () =>
-  /(?:iPad|PlayBook)/.test(ua) || (isAndroid() && !/(?:Mobile)/.test(ua)) || (isFireFox() && /(?:Tablet)/.test(ua));
-export const isIos = () => /(?:iPhone)/.test(ua) && !isTablet();
+export const isPad = () =>
+  /(?:iPad|PlayBook)/.test(ua) ||
+  (isAndroid() && !/(?:Mobile)/.test(ua)) ||
+  (isFireFox() && /(?:Tablet)/.test(ua));
+export const isIos = () => /(?:iPhone)/.test(ua) && !isPad();
 export const isWechat = () => /MicroMessenger/.test(ua);
 export const isPc = () => !isIos() && !isAndroid();
 export const isLow = () => false;
 
 // iPhone X、iPhone XS
 export const isIPhoneX = () =>
-  /iphone/gi.test(window.navigator.userAgent) && dp && dp === 3 && iw() === 375 && ih() === 812;
+  /iphone/gi.test(window.navigator.userAgent) &&
+  dp &&
+  dp === 3 &&
+  iw() === 375 &&
+  ih() === 812;
 
 // iPhone XS Max
 export const isIPhoneXMax = () =>
-  /iphone/gi.test(window.navigator.userAgent) && dp && dp === 3 && iw() === 414 && ih() === 896;
+  /iphone/gi.test(window.navigator.userAgent) &&
+  dp &&
+  dp === 3 &&
+  iw() === 414 &&
+  ih() === 896;
 
 export const hair = () => (dp > 1 ? 0.5 : 1);
 export const line = () => (dp > 1 ? 0.65 : 1);
@@ -33,15 +43,18 @@ export const line = () => (dp > 1 ? 0.65 : 1);
 export const isNeedIPhoneSafe = () => isIPhoneX() || isIPhoneXMax();
 
 // 获取是否是 ios 或 android
-export const isNativeIOS = () => window.location.href.indexOf('_os_ios_') >= 0;
-export const isNativeAndroid = () => window.location.href.indexOf('_os_android_') >= 0;
-export const isNative = () => isNativeIOS() || isNativeAndroid() || (window as any).cordova || false;
+export const isNativeIOS = () => window.location.href.indexOf("_os_ios_") >= 0;
+export const isNativeAndroid = () =>
+  window.location.href.indexOf("_os_android_") >= 0;
+export const isNative = () =>
+  isNativeIOS() || isNativeAndroid() || (window as any).cordova || false;
 
 export const safeTop = () => (isNative() ? (isNeedIPhoneSafe() ? 43 : 20) : 0);
 
-export const safeBottom = () => (isNative() || isWechat() ? (isNeedIPhoneSafe() ? 25 : 0) : 0);
+export const safeBottom = () =>
+  isNative() || isWechat() ? (isNeedIPhoneSafe() ? 25 : 0) : 0;
 
-const id = '__device-style-ele__';
+const id = "__device-style-ele__";
 
 // 根据设备设置高度
 function setCSSValue() {
@@ -55,7 +68,7 @@ function setCSSValue() {
   if (lastStyle) {
     lastStyle.textContent = deviceStyle;
   } else {
-    const styleEle = document.createElement('style');
+    const styleEle = document.createElement("style");
     styleEle.textContent = deviceStyle;
     styleEle.id = id;
     document.head.append(styleEle);
@@ -64,7 +77,7 @@ function setCSSValue() {
 
 let resizeTimer = null as any;
 
-window.addEventListener('resize', () => {
+window.addEventListener("resize", () => {
   if (resizeTimer) {
     clearTimeout(resizeTimer);
     resizeTimer = null;
@@ -91,20 +104,20 @@ export const setCanNotScalePage = () => {
     }
   `;
 
-  const styleEle = document.createElement('style');
+  const styleEle = document.createElement("style");
   styleEle.textContent = nextCss;
 
-  const mateEle = document.createElement('meta');
-  mateEle.setAttribute('name', 'viewport');
+  const mateEle = document.createElement("meta");
+  mateEle.setAttribute("name", "viewport");
   mateEle.setAttribute(
-    'content',
-    'width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui, viewport-fit=cover',
+    "content",
+    "width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui, viewport-fit=cover"
   );
 
   document.head.append(styleEle, mateEle);
 
   /** 阻止双指放大; */
-  document.addEventListener('gesturestart', function(event: any) {
+  document.addEventListener("gesturestart", function(event: any) {
     event.preventDefault();
   });
 };
@@ -125,7 +138,7 @@ export const setKeyboardAutoScrollBack = () => {
       keyboardFocusInput.blur();
     }
   };
-  document.body.addEventListener('focusin', (e: any) => {
+  document.body.addEventListener("focusin", (e: any) => {
     if (keyboardTimer) {
       clearTimeout(keyboardTimer);
       keyboardTimer = null;
@@ -136,15 +149,15 @@ export const setKeyboardAutoScrollBack = () => {
     windowScrollTop = window.scrollY;
 
     keyboardTimer = setTimeout(() => {
-      document.body.addEventListener('touchend', bindBlurKeyboard);
+      document.body.addEventListener("touchend", bindBlurKeyboard);
     }, 60);
   });
-  document.body.addEventListener('focusout', () => {
+  document.body.addEventListener("focusout", () => {
     // 软键盘关闭事件
     document.body.scrollTop = bodyScrollTop;
     window.scrollTo(0, windowScrollTop);
     keyboardFocusInput = false;
-    document.body.removeEventListener('touchend', bindBlurKeyboard);
+    document.body.removeEventListener("touchend", bindBlurKeyboard);
   });
 };
 
@@ -152,11 +165,11 @@ export const setFocusTouchScroll = (view?: any) => {
   if (!(window as any).__setBodyCanNotTouchScroll) {
     // 阻止默认的处理方式(阻止下拉滑动的效果)
     document.addEventListener(
-      'touchmove',
+      "touchmove",
       function(e) {
         e.preventDefault();
       },
-      { passive: false },
+      { passive: false }
     );
     return;
   }
@@ -170,7 +183,7 @@ export const setFocusTouchScroll = (view?: any) => {
   if (!view.__mobile_scroll) {
     view.__mobile_scroll = true;
 
-    view.addEventListener('touchstart', () => {
+    view.addEventListener("touchstart", () => {
       // 计算高度是否可以滚动
       view.__can_scroll = view.scrollHeight > view.clientHeight;
 
@@ -179,14 +192,17 @@ export const setFocusTouchScroll = (view?: any) => {
 
         if (scrollTop === 0) {
           view.scrollTop = 1;
-        } else if ((scrollTop as number) + (view.offsetHeight as number) === view.scrollHeight) {
+        } else if (
+          (scrollTop as number) + (view.offsetHeight as number) ===
+          view.scrollHeight
+        ) {
           view.scrollTop = view.scrollHeight - view.offsetHeight - 1;
         }
       }
     });
 
     // body整个阻止了滚动，此时整个页面都不能滚动，在需要滚动对象中拦截冒泡才可滚动
-    view.addEventListener('touchmove', (e: Event) => {
+    view.addEventListener("touchmove", (e: Event) => {
       if (view.__can_scroll) {
         e.stopPropagation();
       } else {

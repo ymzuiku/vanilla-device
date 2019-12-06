@@ -22,7 +22,7 @@ $ npm install --save vanilla-device
 ### 1. Get Device details:
 
 ```js
-import vanillaDevice from "vanilla-device";
+import "vanilla-device";
 
 console.log(vanillaDevice.isPc());
 console.log(vanillaDevice.isIPhoneX());
@@ -48,7 +48,9 @@ import vanillaDevice from "vanilla-device";
 
 3. If your use CSS-IN-JS
 
-```html
+```js
+import vanillaDevice from "vanilla-device";
+
 const safeTop = vanillaDevice.safeTop(); 
 
 <div style="{{ paddingTop:safeTop }} />

@@ -26,23 +26,32 @@ import vanillaDevice from "vanilla-device";
 
 console.log(vanillaDevice.isPc());
 console.log(vanillaDevice.isIPhoneX());
-console.log(vanillaDevice.topSafe());
+console.log(vanillaDevice.safeTop());
 ```
 
 ### 2. Safe CSS:
 
-1. Double-clicking the screen will not scale
-2. Finger kneading won't zoom in on the screen
+1. import package
 
 ```js
 import vanillaDevice from "vanilla-device";
 ```
+
+2. use css value
 
 ```css
 .page {
   padding-top: var(--safe-top);
   padding-bottom: var(--safe-bottom);
 }
+```
+
+3. If your use CSS-IN-JS
+
+```html
+const safeTop = vanillaDevice.safeTop(); 
+
+<div style="{{ paddingTop:safeTop }} />
 ```
 
 ### 3. Touch:

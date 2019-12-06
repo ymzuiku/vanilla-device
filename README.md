@@ -75,8 +75,12 @@ vanillaDevice.setCanNotScalePage();
 ```js
 import vanillaDevice from "vanilla-device";
 
+// use setFocusTouchScroll
 const view = document.getElementById("the-need-scroll-element");
 vanillaDevice.setFocusTouchScroll(view);
+
+// or set focus-touch-scroll to dom
+const view = <div focus-touch-scroll />;
 ```
 
 ### 5. Keyboard:

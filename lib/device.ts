@@ -23,36 +23,28 @@ export const isLow = () => false;
 
 // iPhone X、iPhone XS
 export const isIPhoneX = () =>
-  /iphone/gi.test(window.navigator.userAgent) &&
-  dp &&
-  dp === 3 &&
-  iw() === 375 &&
-  ih() === 812;
-
-// iPhone XS Max
-export const isIPhoneXMax = () =>
-  /iphone/gi.test(window.navigator.userAgent) &&
-  dp &&
-  dp === 3 &&
-  iw() === 414 &&
-  ih() === 896;
+  /iphone/gi.test(window.navigator.userAgent) && ih() >= 812;
 
 export const hair = () => (dp > 1 ? 0.5 : 1);
 export const line = () => (dp > 1 ? 0.65 : 1);
 
-export const isNeedIPhoneSafe = () => isIPhoneX() || isIPhoneXMax();
-
 // 获取是否是 ios 或 android
-export const isNativeIOS = () => window.location.href.indexOf("_os_ios_") >= 0;
+export const isNativeIOS = () =>
+  window.location.href.indexOf("_os_ios_") >= 0 || (window as any)._os_ios;
 export const isNativeAndroid = () =>
-  window.location.href.indexOf("_os_android_") >= 0;
+  window.location.href.indexOf("_os_android_") >= 0 ||
+  (window as any)._os_android;
 export const isNative = () =>
   isNativeIOS() || isNativeAndroid() || (window as any).cordova || false;
 
-export const safeTop = () => (isNative() ? (isNeedIPhoneSafe() ? 43 : 20) : 0);
+export const safeTop = () => (isNative() ? (isIPhoneX() ? 43 : 20) : 0);
 
-export const safeBottom = () =>
-  isNative() || isWechat() ? (isNeedIPhoneSafe() ? 25 : 0) : 0;
+export const safeBottom = () => {
+  if (isWechat()) {
+    return ih() >= 720 ? 25 : 0;
+  }
+  return isIPhoneX() ? 25 : 0;
+};
 
 const id = "__device-style-ele__";
 
@@ -163,6 +155,7 @@ export const setKeyboardAutoScrollBack = () => {
 
 export const setFocusTouchScroll = (view?: any) => {
   if (!(window as any).__setBodyCanNotTouchScroll) {
+    (window as any).__setBodyCanNotTouchScroll = true;
     // 阻止默认的处理方式(阻止下拉滑动的效果)
     document.addEventListener(
       "touchmove",
@@ -171,9 +164,17 @@ export const setFocusTouchScroll = (view?: any) => {
       },
       { passive: false }
     );
+
+    const setAttribute = (HTMLElement.prototype as any).setAttribute;
+    HTMLElement.prototype.setAttribute = function(key: string, value: string) {
+      if (key === "focus-touch-scroll" && value) {
+        setFocusTouchScroll(this);
+      } else {
+        setAttribute.call(this, key, value);
+      }
+    };
     return;
   }
-  (window as any).__setBodyCanNotTouchScroll = true;
 
   if (!view) {
     return;
@@ -186,7 +187,6 @@ export const setFocusTouchScroll = (view?: any) => {
     view.addEventListener("touchstart", () => {
       // 计算高度是否可以滚动
       view.__can_scroll = view.scrollHeight > view.clientHeight;
-
       if (view.__can_scroll) {
         const scrollTop = view.scrollTop;
 

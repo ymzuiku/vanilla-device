@@ -79,8 +79,8 @@ import vanillaDevice from "vanilla-device";
 const view = document.getElementById("the-need-scroll-element");
 vanillaDevice.setFocusTouchScroll(view);
 
-// or set focus-touch-scroll to dom
-const view = <div focus-touch-scroll />;
+// or set focus-touch-scroll to dom, need have height
+const view = <div focus-touch-scroll="true" style={{ height: 500 }} />;
 ```
 
 ### 5. Keyboard:

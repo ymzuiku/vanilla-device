@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar } from "../components/AppBar";
 import { Header } from "../components/Header";
 
-const list = Array(500).fill(null);
+const list = Array(200).fill(null);
 
 export const Home = () => {
   return (

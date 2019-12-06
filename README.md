@@ -8,7 +8,7 @@
 unpkg:
 
 ```html
-<script src="https://unpkg.com/vanilla-device@0.2.4/umd/index.js"></script>
+<script src="https://unpkg.com/vanilla-device@1.0.7/umd/index.js"></script>
 ```
 
 npm:

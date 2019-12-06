@@ -51,9 +51,9 @@ import vanillaDevice from "vanilla-device";
 ```js
 import vanillaDevice from "vanilla-device";
 
-const safeTop = vanillaDevice.safeTop(); 
+const safeTop = vanillaDevice.safeTop();
 
-<div style="{{ paddingTop:safeTop }} />
+<div style="{{ paddingTop: safeTop }} />
 ```
 
 ### 3. Touch:

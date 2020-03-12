@@ -15,6 +15,8 @@ export declare const isLow: () => boolean;
 export declare const isIPhoneX: () => boolean;
 export declare const hair: () => 1 | 0.5;
 export declare const line: () => 1 | 0.65;
+export declare function getAndroidVersion(): number;
+export declare function getIOSVersion(): number;
 export declare const isNativeIOS: () => any;
 export declare const isNativeAndroid: () => any;
 export declare const isNative: () => any;

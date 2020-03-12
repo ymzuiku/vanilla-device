@@ -28,6 +28,29 @@ export const isIPhoneX = () =>
 export const hair = () => (dp > 1 ? 0.5 : 1);
 export const line = () => (dp > 1 ? 0.65 : 1);
 
+export function getAndroidVersion() {
+  if (!isAndroid) {
+    return 0;
+  }
+  var theUa = ua.toLowerCase();
+  var match = theUa.match(/android\s([0-9\.]*)/);
+  const version = match ? match[1] : "0";
+
+  return parseFloat(version);
+}
+
+export function getIOSVersion() {
+  if (!isIos()) {
+    return 0;
+  }
+  var theUa = ua.toLowerCase();
+  var reg = /os [\d._]+/gi;
+  var v_info = theUa.match(reg);
+  const version = (v_info + "").replace(/[^0-9|_.]/gi, "").replace(/_/gi, "."); //得到版本号9.3.2或者9.0
+
+  return parseFloat(version);
+}
+
 // 获取是否是 ios 或 android
 export const isNativeIOS = () =>
   window.location.href.indexOf("_os_ios_") >= 0 || (window as any)._os_ios;
@@ -40,7 +63,7 @@ export const isNative = () =>
 export const safeTop = () => (isNative() ? (isIPhoneX() ? 43 : 20) : 0);
 
 export const safeBottom = () => {
-  if (isWechat()) {
+  if (isWechat() && isIos()) {
     return ih() >= 720 ? 25 : 0;
   }
   return isIPhoneX() ? 25 : 0;
@@ -114,7 +137,7 @@ export const setCanNotScalePage = () => {
   });
 };
 
-export const setKeyboardAutoHide= () => {
+export const setKeyboardAutoHide = () => {
   if (isPc() || (window as any).__setKeyboardAutoHide) {
     return;
   }
@@ -153,9 +176,7 @@ export const setKeyboardAutoHide= () => {
   });
 };
 
-export const setCanScrollByAttribute = (
-  dataKey = "data-can-scroll"
-) => {
+export const setCanScrollByAttribute = (dataKey = "data-can-scroll") => {
   if (!(window as any).__setCanScrollByAttribute) {
     (window as any).__setCanScrollByAttribute = true;
     const setAttribute = (HTMLElement.prototype as any).setAttribute;
@@ -190,7 +211,6 @@ export const setCanScroll = (view?: any) => {
     document.body.appendChild(styleEle);
   }
 
-
   if (!view) {
     return;
   }
@@ -203,14 +223,11 @@ export const setCanScroll = (view?: any) => {
       // 计算高度是否可以滚动
       view.__can_scroll = view.scrollHeight > view.clientHeight;
       if (view.__can_scroll) {
-        const scrollTop:number = view.scrollTop;
+        const scrollTop: number = view.scrollTop;
 
         if (scrollTop === 0) {
           view.scrollTop = 1;
-        } else if (
-          scrollTop + view.offsetHeight ===
-          view.scrollHeight
-        ) {
+        } else if (scrollTop + view.offsetHeight === view.scrollHeight) {
           view.scrollTop = view.scrollHeight - view.offsetHeight - 1;
         }
       }

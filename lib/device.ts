@@ -19,7 +19,12 @@ export const isPad = () =>
 export const isIos = () => /(?:iPhone)/.test(ua) && !isPad();
 export const isWechat = () => /MicroMessenger/.test(ua);
 export const isPc = () => !isIos() && !isAndroid();
-export const isLow = () => false;
+export const isLow = () => {
+  if (isPc()) {
+    return false;
+  }
+  return getAndroidVersion() <= 8 || getIOSVersion() <= 12
+};
 
 // iPhone X、iPhone XS
 export const isIPhoneX = () =>
@@ -30,7 +35,7 @@ export const line = () => (dp > 1 ? 0.65 : 1);
 
 export function getAndroidVersion() {
   if (!isAndroid) {
-    return 0;
+    return 999;
   }
   var theUa = ua.toLowerCase();
   var match = theUa.match(/android\s([0-9\.]*)/);
@@ -41,7 +46,7 @@ export function getAndroidVersion() {
 
 export function getIOSVersion() {
   if (!isIos()) {
-    return 0;
+    return 999;
   }
   var theUa = ua.toLowerCase();
   var reg = /os [\d._]+/gi;
@@ -102,15 +107,20 @@ window.addEventListener("resize", () => {
 
 setCSSValue();
 
-export const setCanNotScalePage = () => {
-  if (isPc() || (window as any).__setCanNotScale) {
+
+export const setMobileCss = () => {
+  if ((window as any).__setMobileCss) {
     return;
   }
 
   (window as any).__setCanNotScale = true;
   // touch-action: manipulation; 启用平移和捏合缩放手势，但禁用其他非标准手势
   const nextCss = `
+    body::-webkit-scrollbar {
+      display:none;
+    }
     * {
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
       -moz-user-select:none; -webkit-user-select:none; -ms-user-select:none; user-select:none; 
       touch-action: manipulation;
     }

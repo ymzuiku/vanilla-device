@@ -64,7 +64,7 @@ const safeTop = vanillaDevice.safeTop();
 ```js
 import vanillaDevice from "vanilla-device";
 
-vanillaDevice.setCanNotScalePage();
+vanillaDevice.setMobileCss();
 ```
 
 ### 4. Scroll like native:

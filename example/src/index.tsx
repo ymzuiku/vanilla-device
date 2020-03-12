@@ -5,5 +5,6 @@ import { Home } from "./pages/Home";
 import vanillaDevice from "vanilla-device";
 
 vanillaDevice.setFocusTouchScroll();
+vanillaDevice.setFocusTouchScrollByAttribute();
 
 render(<Home />, document.getElementById("root"));

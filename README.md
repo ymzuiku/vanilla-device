@@ -80,6 +80,7 @@ const view = document.getElementById("the-need-scroll-element");
 vanillaDevice.setFocusTouchScroll(view);
 
 // or set focus-touch-scroll to dom, need have height
+vanillaDevice.setFocusTouchScrollByAttribute('focus-touch-scroll');
 const view = <div focus-touch-scroll="true" style={{ height: 500 }} />;
 ```
 

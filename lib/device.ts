@@ -153,6 +153,22 @@ export const setKeyboardAutoScrollBack = () => {
   });
 };
 
+export const setFocusTouchScrollByAttribute = (
+  dataKey = "focus-touch-scroll"
+) => {
+  if (!(window as any).__setFocusTouchScrollByAttribute) {
+    (window as any).__setFocusTouchScrollByAttribute = true;
+    const setAttribute = (HTMLElement.prototype as any).setAttribute;
+    HTMLElement.prototype.setAttribute = function(key: string, value: string) {
+      if (key === dataKey && value) {
+        setFocusTouchScroll(this);
+      } else {
+        setAttribute.call(this, key, value);
+      }
+    };
+  }
+};
+
 export const setFocusTouchScroll = (view?: any) => {
   if (!(window as any).__setBodyCanNotTouchScroll) {
     (window as any).__setBodyCanNotTouchScroll = true;
@@ -165,16 +181,16 @@ export const setFocusTouchScroll = (view?: any) => {
       { passive: false }
     );
 
-    const setAttribute = (HTMLElement.prototype as any).setAttribute;
-    HTMLElement.prototype.setAttribute = function(key: string, value: string) {
-      if (key === "focus-touch-scroll" && value) {
-        setFocusTouchScroll(this);
-      } else {
-        setAttribute.call(this, key, value);
-      }
-    };
+    const styleEle = document.createElement("style");
+    styleEle.textContent = `
+  div {
+    -webkit-overflow-scrolling: touch;
+  }
+`;
+    document.body.appendChild(styleEle);
     return;
   }
+
 
   if (!view) {
     return;
@@ -184,6 +200,7 @@ export const setFocusTouchScroll = (view?: any) => {
   if (!view.__mobile_scroll) {
     view.__mobile_scroll = true;
 
+    view.__can_scroll = true;
     view.addEventListener("touchstart", () => {
       // 计算高度是否可以滚动
       view.__can_scroll = view.scrollHeight > view.clientHeight;

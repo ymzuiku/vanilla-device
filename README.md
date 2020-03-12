@@ -77,11 +77,17 @@ import vanillaDevice from "vanilla-device";
 
 // use setFocusTouchScroll
 const view = document.getElementById("the-need-scroll-element");
-vanillaDevice.setFocusTouchScroll(view);
+vanillaDevice.setCanScroll(view);
+```
+
+If in React or Vue:
+
+```js
+import vanillaDevice from "vanilla-device";
 
 // or set focus-touch-scroll to dom, need have height
-vanillaDevice.setFocusTouchScrollByAttribute('focus-touch-scroll');
-const view = <div focus-touch-scroll="true" style={{ height: 500 }} />;
+vanillaDevice.setCanScrollByAttribute('data-can-scroll');
+const view = <div data-can-scroll="true" style={{ height: 500 }} />;
 ```
 
 ### 5. Keyboard:
@@ -92,5 +98,5 @@ const view = <div focus-touch-scroll="true" style={{ height: 500 }} />;
 ```js
 import vanillaDevice from "vanilla-device";
 
-vanillaDevice.setKeyboardAutoScrollBack();
+vanillaDevice.setKeyboardAutoHide();
 ```

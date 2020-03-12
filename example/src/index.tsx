@@ -4,7 +4,7 @@ import { render } from "react-dom";
 import { Home } from "./pages/Home";
 import vanillaDevice from "vanilla-device";
 
-vanillaDevice.setFocusTouchScroll();
-vanillaDevice.setFocusTouchScrollByAttribute();
+vanillaDevice.setCanScrollByAttribute();
+vanillaDevice.setKeyboardAutoHide();
 
 render(<Home />, document.getElementById("root"));

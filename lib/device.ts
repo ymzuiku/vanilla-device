@@ -114,12 +114,12 @@ export const setCanNotScalePage = () => {
   });
 };
 
-export const setKeyboardAutoScrollBack = () => {
-  if (isPc() || (window as any).__setKeyboardAutoScrollBack) {
+export const setKeyboardAutoHide= () => {
+  if (isPc() || (window as any).__setKeyboardAutoHide) {
     return;
   }
 
-  (window as any).__setKeyboardAutoScrollBack = true;
+  (window as any).__setKeyboardAutoHide = true;
   // 处理ios移动端键盘自动收起，并且回到页面滚动位置
   let bodyScrollTop = 0;
   let windowScrollTop = 0;
@@ -153,15 +153,15 @@ export const setKeyboardAutoScrollBack = () => {
   });
 };
 
-export const setFocusTouchScrollByAttribute = (
-  dataKey = "focus-touch-scroll"
+export const setCanScrollByAttribute = (
+  dataKey = "data-can-scroll"
 ) => {
-  if (!(window as any).__setFocusTouchScrollByAttribute) {
-    (window as any).__setFocusTouchScrollByAttribute = true;
+  if (!(window as any).__setCanScrollByAttribute) {
+    (window as any).__setCanScrollByAttribute = true;
     const setAttribute = (HTMLElement.prototype as any).setAttribute;
     HTMLElement.prototype.setAttribute = function(key: string, value: string) {
       if (key === dataKey && value) {
-        setFocusTouchScroll(this);
+        setCanScroll(this);
       } else {
         setAttribute.call(this, key, value);
       }
@@ -169,9 +169,9 @@ export const setFocusTouchScrollByAttribute = (
   }
 };
 
-export const setFocusTouchScroll = (view?: any) => {
-  if (!(window as any).__setBodyCanNotTouchScroll) {
-    (window as any).__setBodyCanNotTouchScroll = true;
+export const setCanScroll = (view?: any) => {
+  if (!(window as any).__setCanScroll) {
+    (window as any).__setCanScroll = true;
     // 阻止默认的处理方式(阻止下拉滑动的效果)
     document.addEventListener(
       "touchmove",
@@ -188,7 +188,6 @@ export const setFocusTouchScroll = (view?: any) => {
   }
 `;
     document.body.appendChild(styleEle);
-    return;
   }
 
 
@@ -200,17 +199,16 @@ export const setFocusTouchScroll = (view?: any) => {
   if (!view.__mobile_scroll) {
     view.__mobile_scroll = true;
 
-    view.__can_scroll = true;
     view.addEventListener("touchstart", () => {
       // 计算高度是否可以滚动
       view.__can_scroll = view.scrollHeight > view.clientHeight;
       if (view.__can_scroll) {
-        const scrollTop = view.scrollTop;
+        const scrollTop:number = view.scrollTop;
 
         if (scrollTop === 0) {
           view.scrollTop = 1;
         } else if (
-          (scrollTop as number) + (view.offsetHeight as number) ===
+          scrollTop + view.offsetHeight ===
           view.scrollHeight
         ) {
           view.scrollTop = view.scrollHeight - view.offsetHeight - 1;

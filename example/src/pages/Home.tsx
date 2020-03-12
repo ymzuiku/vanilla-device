@@ -9,7 +9,7 @@ export const Home = () => {
     <div>
       <Header />
       <div
-        focus-touch-scroll="true"
+        data-can-scroll="true"
         style={{
           overflow: "auto",
           height:

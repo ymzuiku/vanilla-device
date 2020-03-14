@@ -18,12 +18,30 @@ export const isPad = () =>
   (isFireFox() && /(?:Tablet)/.test(ua));
 export const isIos = () => /(?:iPhone)/.test(ua) && !isPad();
 export const isWechat = () => /MicroMessenger/.test(ua);
-export const isPc = () => !isIos() && !isAndroid();
+export const isPc = () => {
+  const agents = [
+    "android",
+    "iphone",
+    "windows phone",
+    "ipad",
+    "ipod"
+  ];
+  
+  let flag = true;
+  const ua = navigator.userAgent.toLowerCase();
+  for (let v = 0; v < agents.length; v++) {
+    if (ua.indexOf(agents[v]) > 0) {
+      flag = false;
+      break;
+    }
+  }
+  return flag
+};
 export const isLow = () => {
   if (isPc()) {
     return false;
   }
-  return getAndroidVersion() <= 8 || getIOSVersion() <= 12
+  return getAndroidVersion() <= 8 || getIOSVersion() <= 12;
 };
 
 // iPhone X、iPhone XS
@@ -107,18 +125,14 @@ window.addEventListener("resize", () => {
 
 setCSSValue();
 
-
 export const setMobileCss = () => {
-  if ((window as any).__setMobileCss) {
+  if (isPc() || (window as any).__setMobileCss) {
     return;
   }
 
   (window as any).__setCanNotScale = true;
   // touch-action: manipulation; 启用平移和捏合缩放手势，但禁用其他非标准手势
   const nextCss = `
-    body::-webkit-scrollbar {
-      display:none;
-    }
     * {
       -webkit-tap-highlight-color: rgba(0,0,0,0);
       -moz-user-select:none; -webkit-user-select:none; -ms-user-select:none; user-select:none; 

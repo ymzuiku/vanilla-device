@@ -1,6 +1,6 @@
 {
   "name": "vanilla-device",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "main": "umd/index.js",
   "types": "umd/index.d.ts",
   "private": false,

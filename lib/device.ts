@@ -34,7 +34,7 @@ export const hair = () => (dp > 1 ? 0.5 : 1);
 export const line = () => (dp > 1 ? 0.65 : 1);
 
 export function getAndroidVersion() {
-  if (!isAndroid) {
+  if (!isAndroid()) {
     return 999;
   }
   var theUa = ua.toLowerCase();
